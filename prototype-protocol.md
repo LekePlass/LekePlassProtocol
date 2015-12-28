@@ -12,19 +12,17 @@
 
 プロトコルは、全てUTF-8文字エンコーディングによって解釈される。
 
-## ルールの合意
+## 通信の開始
 
-### クライアントの意思表示
+### クライアントの接続確認
 
 クライアントは、サーバーに接続したあと、直ちにProtocolコマンドを送る必要がある。
-そのあと、任意でSet-Optionsコマンドを送ることができる。
-クライアントは、意思表示情報を送ったあとに空行を送る必要がある。
+クライアントの接続確認を送った後には空行を送る必要がある。
 
-クライアントの意思表示の形式は以下のようになる。
+クライアントの接続確認の形式は以下のようになる。
 
 ```
 <Protocol Command>
-<Set-Options Command>?
 <CRLF>
 ```
 
@@ -34,6 +32,51 @@ Protocolコマンドはライン形式のみで表現可能で以下のように
 
 ```
 Protocol: <Protocol Name>/<Protocol Version>
+```
+
+### サーバーの接続応答
+
+サーバーは、クライアントの接続確認を受け取った後直ちにAllow-Data-Formatコマンドを送信する。
+サーバーの接続応答を送った後には空行を送る必要がある。
+
+サーバーの接続応答の形式は以下のようになる。
+
+#### Allow-Data-Format
+
+Allow-Data-Formatコマンドはライン形式のみで表現可能で以下のようになる。
+
+```
+Allow-Data-Format:*( <Data Format Name>/<Data Format Version>)
+```
+
+なお、何も表記されなかった場合以下と同等とする。
+
+```
+Allow-Data-Format: plain
+```
+
+## ルールの合意
+
+### クライアントの意思表示
+
+クライアントはまず、Rule-Intensionコマンドで意思表示の指標を送る。
+そのあと、任意でSet-Optionsコマンドを送ることができる。
+クライアントは、意思表示情報を送ったあとに空行を送る必要がある。
+
+クライアントの意思表示の形式は以下のようになる。
+
+```
+<Rule-Intension Command>
+<Set-Options Command>?
+<CRLF>
+```
+
+#### Rule-Intension
+
+Rule-Intensionコマンドはライン形式のみで表現可能で以下のようになる。
+
+```
+Rule-Intension: <Signature of Rule Intension>
 ```
 
 #### Set-Options
