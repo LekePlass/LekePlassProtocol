@@ -41,18 +41,23 @@ Protocol: <Protocol Name>/<Protocol Version>
 
 サーバーの接続応答の形式は以下のようになる。
 
-#### Allow-Data-Format
+```
+<Allow-Data-Formats Command>
+<CRLF>
+```
+
+#### Allow-Data-Formats
 
 Allow-Data-Formatコマンドはライン形式のみで表現可能で以下のようになる。
 
 ```
-Allow-Data-Format:*( <Data Format Name>/<Data Format Version>)
+Allow-Data-Formats:*( <Data Format Name>/<Data Format Version>)
 ```
 
 なお、何も表記されなかった場合以下と同等とする。
 
 ```
-Allow-Data-Format: plain
+Allow-Data-Format: plain/1.0
 ```
 
 ## ルールの合意
@@ -67,7 +72,7 @@ Allow-Data-Format: plain
 
 ```
 <Rule-Intension Command>
-<Set-Options Command>?
+<Set-Options? Command>?
 <CRLF>
 ```
 
@@ -79,12 +84,12 @@ Rule-Intensionコマンドはライン形式のみで表現可能で以下のよ
 Rule-Intension: <Signature of Rule Intension>
 ```
 
-#### Set-Options
+#### Set-Options?
 
 Set-Optionsコマンドはヒアドック形式のみで表現可能で以下のようになる。
 
 ```
-Set-Options: <- <Data Format>
+Set-Options?: <- <Data Format>
 <Option Data>
 <CRLF>
 ```
@@ -102,9 +107,9 @@ Set-Options: <- <Data Format>
 
 ```
 <Rule-Declaration Lines>|<Rule-Customize Lines>
-<Data-Format Command>?
+<Data-Format? Command>?
 <Initial-Context Command>
-<Consensus-Time Command>?
+<Consensus-Time? Command>?
 <CRLF>
 ```
 
@@ -135,7 +140,7 @@ Rule-Customize: <- <Data Format>?
 Data-Formatコマンドはライン形式のみで表現可能で以下の形式になる。
 
 ```
-Data-Format: <Data Format Name>/<Data Format Version>
+Data-Format?: <Data Format Name>/<Data Format Version>
 ```
 
 #### Initial-Context
@@ -148,12 +153,12 @@ Initial-Context: <- <Data Format>?
 <CRLF>
 ```
 
-#### Consensus-Time
+#### Consensus-Time?
 
 Consensus-Timeコマンドはライン形式のみで表現可能で以下の形式になる。
 
 ```
-Consensus-Time: <Consensus Time Seconds>
+Consensus-Time?: <Consensus Time Seconds>
 ```
 
 ### クライアントの合意
@@ -166,7 +171,7 @@ Consensus-Time: <Consensus Time Seconds>
 
 ```
 <Rule-Consensus Command>
-<Rule-Consensus-Detail Command>?
+<Rule-Consensus-Detail? Command>?
 <CRLF>
 ```
 
@@ -178,20 +183,12 @@ Rule-Consensusコマンドはライン形式のみで表現可能で以下の形
 Rule-Consensus: agree|reject
 ```
 
-#### Rule-Consensus-Detail
+#### Rule-Consensus-Detail?
 
-Rule-Consensus-Detailコマンドは、ライン形式・ヒアドック形式の両方で表現可能でそれぞれ以下の形式になる。
-
-ライン形式の場合以下のようになる。
+Rule-Consensus-Detailコマンドは、ヒアドック形式のみで表現可能で以下の形式になる。
 
 ```
-Rule-Consensus-Detail: <Consensus Detail>
-```
-
-ヒアドック形式の場合以下のようになる。
-
-```
-Rule-Consensus-Detail: <- <Data Format>?
+Rule-Consensus-Detail?: <- <Data Format>?
 <Consensus Detail>
 <CRLF>
 ```
@@ -209,7 +206,7 @@ Rule-Consensus-Detail: <- <Data Format>?
 
 ```
 <Is-Ready Command>
-<Ready-Time Command>?
+<Ready-Time? Command>?
 <CRLF>
 ```
 
@@ -221,12 +218,12 @@ Is-Readyコマンドはライン形式のみで表現可能で以下の形式に
 Is-Ready: <Is-Ready Detail>
 ```
 
-#### Ready-Time
+#### Ready-Time?
 
 Ready-Timeコマンドはライン形式のみで表現可能で以下の形式になる。
 
 ```
-Ready-Time: <Ready Time Seconds>
+Ready-Time?: <Ready Time Seconds>
 ```
 
 ### クライアントの準備完了の通知
@@ -279,7 +276,7 @@ Game-Start: <Game Start Detail>
 
 ```
 <Game-Context Command>
-<Game-Time Command>?
+<Game-Time? Command>?
 <Go Command>
 <CRLF>
 ```
@@ -294,12 +291,12 @@ Game-Context: <- <Data Format>?
 <CRLF>
 ```
 
-#### Game-Time
+#### Game-Time?
 
 Game-Timeコマンドはライン形式でのみ表現可能で以下の形式になる。
 
 ```
-Game-Time: <Game Time Seconds>
+Game-Time?: <Game Time Seconds>
 ```
 
 #### Go
@@ -320,7 +317,7 @@ Go: <Go Detail>
 
 ```
 <Game-Action-Move Lines>|<Game-Action-Giveup Lines>|<Game-Action-Extra Lines>
-<Game-Action-Detail Command>?
+<Game-Action-Detail? Command>?
 <CRLF>
 ```
 
@@ -350,12 +347,12 @@ Extraアクションは以下の形式になる。
 Game-Action-Mode: extra
 ```
 
-#### Game-Action-Detail
+#### Game-Action-Detail?
 
 Game-Action-Detailコマンドはヒアドック形式のみで表現可能で以下の形式になる。
 
 ```
-Game-Action-Detail: <- <Data Format>?
+Game-Action-Detail?: <- <Data Format>?
 <Game Action Detail>
 <CRLF>
 ```
@@ -370,8 +367,8 @@ Game-Action-Detail: <- <Data Format>?
 
 ```
 <Game-Stop Command>
-<Game-Stop-Detail Command>?
-<Game-Stop-Time Command>?
+<Game-Stop-Detail? Command>?
+<Game-Stop-Time? Command>?
 <CRLF>
 ```
 
@@ -383,22 +380,22 @@ Game-Stopコマンドはライン形式のみで表現可能で以下の形式�
 Game-Stop: <Game Stop Variable>
 ```
 
-#### Game-Stop-Detail
+#### Game-Stop-Detail?
 
 Game-Stop-Detailコマンドはヒアドック形式のみで表現可能で以下の形式になる。
 
 ```
-Game-Stop-Detail: <- <Deta Format>?
+Game-Stop-Detail?: <- <Deta Format>?
 <Game Stop Detail>
 <CRLF>
 ```
 
-#### Game-Stop-Time
+#### Game-Stop-Time?
 
 Game-Stop-Timeコマンドはライン形式のみで表現可能で以下の形式になる。
 
 ```
-Game-Stop-Time: <Game Stop Seconds>
+Game-Stop-Time?: <Game Stop Seconds>
 ```
 
 ### 中断に対する応答
@@ -429,7 +426,7 @@ Game-Stop-Received: <Game Stop Received Message>
 
 ```
 <Game-Status Command>
-<Game-Status-Detail Command>?
+<Game-Status-Detail? Command>?
 ```
 
 #### Game-Status
@@ -437,15 +434,15 @@ Game-Stop-Received: <Game Stop Received Message>
 Game-Statusコマンドはライン形式でのみ表現可能で以下の形式になる。
 
 ```
-Game-Status: ok|end
+Game-Status: continue|end
 ```
 
-#### Game-Status-Detail
+#### Game-Status-Detail?
 
 Game-Status-Detailコマンドはヒアドック形式でのみ表現可能で以下の形式になる。
 
 ```
-Game-Status-Detail: <- <Data Format>?
+Game-Status-Detail?: <- <Data Format>?
 <Game Status Detail>
 <CRLF>
 ```
@@ -463,7 +460,7 @@ Game-Status-Detail: <- <Data Format>?
 
 ```
 <Game-End Command>
-<Game-End-Detail Command>?
+<Game-End-Detail? Command>?
 <CRLF>
 ```
 
@@ -475,12 +472,12 @@ Game-Endコマンドはライン形式でのみ表現可能で以下の形式に
 Game-End: win|lose|draw|nogame
 ```
 
-#### Game-End-Detail
+#### Game-End-Detail?
 
 Game-End-Detailコマンドはヒアドック形式でのみ表現可能で以下の形式になる。
 
 ```
-Game-End-Detail: <- <Data Format>?
+Game-End-Detail?: <- <Data Format>?
 <Game End Detail>
 <CRLF>
 ```

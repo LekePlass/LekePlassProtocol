@@ -81,7 +81,7 @@ command-heredoc = field-name <:> { WS } left-arrow { WS } [data-format { WS }]
                   ? any octets not including 2 times CRLF starts with CRLF ?
 				  2 * CRLF
 left-arrow = "<" "-"
-data-format = data-format-name [</> data-format-version]
+data-format = data-format-name </> data-format-version
 data-format-name = data-format-headchr { data-format-headchr | data-format-nonheadchr }
 data-format-headchr = ASC_DIGIT | ASC_ALPHA
 data-format-nonheadchr = "-" | ":" | ";" | "." | "," | "_" | "@" | "+"
