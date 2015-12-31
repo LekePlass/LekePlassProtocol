@@ -57,7 +57,7 @@ Allow-Data-Formats:*( <Data Format Name>/<Data Format Version>)
 なお、何も表記されなかった場合以下と同等とする。
 
 ```
-Allow-Data-Format: plain/1.0
+Allow-Data-Formats: plain/1.0.0
 ```
 
 ## ルールの合意
@@ -316,7 +316,7 @@ Go: <Go Detail>
 クライアントの応答を送信した後、空行を送信する必要がある。
 
 ```
-<Game-Action-Move Lines>|<Game-Action-Giveup Lines>|<Game-Action-Extra Lines>
+<Game-Action-Move Lines>|<Game-Action-Giveup Lines>|<Game-Action-Mate Lines>|<Game-Action-Extra Lines>
 <Game-Action-Detail? Command>?
 <CRLF>
 ```
@@ -337,6 +337,14 @@ Resignアクションは以下の形式になる。
 
 ```
 Game-Action-Mode: resign
+```
+
+#### Mateアクションの表現
+
+Mateアクションは以下の形式になる。
+
+```
+Game-Action-Mode: mate
 ```
 
 #### Extraアクションの表現
