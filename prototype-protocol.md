@@ -434,7 +434,7 @@ Game-Stop-Received: <Game Stop Received Message>
 
 ```
 <Game-Status Command>
-<Game-Status-Detail? Command>?
+<Game-Status-Result Command>
 ```
 
 #### Game-Status
@@ -445,12 +445,12 @@ Game-Statusコマンドはライン形式でのみ表現可能で以下の形式
 Game-Status: continue|end
 ```
 
-#### Game-Status-Detail?
+#### Game-Status-Result
 
-Game-Status-Detailコマンドはヒアドック形式でのみ表現可能で以下の形式になる。
+Game-Status-Resultコマンドはヒアドック形式でのみ表現可能で以下の形式になる。
 
 ```
-Game-Status-Detail?: <- <Data Format>?
+Game-Status-Result: <- <Data Format>?
 <Game Status Detail>
 <CRLF>
 ```
